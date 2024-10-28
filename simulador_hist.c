@@ -205,6 +205,77 @@ int login()
     return 0;
 }
 
+int ficha_carro(){
+
+    carregarUsuarios();
+
+    puts(":::: Ficha do Carro ::::\n");
+    printf("Modelo: %s \n", cliente[usuario_log].NomeCarro);
+    printf("Cavalos: %.3f \n",cliente[usuario_log].cv);
+    printf("Torque: %.3f\n", cliente[usuario_log].torque);
+    printf("Roda: %d \" \n", cliente[usuario_log].roda);
+    printf("Cor: %s\n",cliente[usuario_log].cor);
+    printf("Seu saldo: R$ %.2f\n",cliente[usuario_log].reais);
+
+    return 0;
+}
+
+int historico()        
+{
+    carregarUsuarios(); 
+    puts("\n:::: Historico de Corridas ::::\n");
+
+    char *corridas[300];
+    int total= 0;
+    char *historico_copia = strdup(cliente[usuario_log].historico);
+    char *token = strtok(historico_copia, "/");
+
+    while (token != NULL) 
+    {
+        corridas[total] = token;
+        total++;
+        token = strtok(NULL, "/");
+    }
+
+    for (int i = 0; i < total; i++)
+    {
+        printf("%s\n", corridas[i]);
+    }
+
+    free(historico_copia);
+
+    return 0;
+}
+
+int alteracoes_hist(){
+
+    carregarUsuarios(); 
+    
+    puts("\n::::: Historico de alteracoes :::::\n");
+
+    char *alteracoes[300];
+    int total = 0;
+    char *alteracoes_hist_copia = strdup(cliente[usuario_log].alteracoes);
+    char *token = strtok(alteracoes_hist_copia, "/");
+
+    while (token != NULL) 
+    {
+        alteracoes[total] = token;
+        total++;
+        token = strtok(NULL, "/");
+    }
+
+    for (int i = 0; i < total; i++)
+    {
+        printf("%s\n", alteracoes[i]);
+
+    }
+
+    free(alteracoes_hist_copia);
+
+    return 0;
+}
+
 int menu(){
 
     int opcao;
@@ -230,7 +301,7 @@ int menu(){
     switch (opcao)
     {
         case 1:
-            //ficha_carro(); Implementar 
+            ficha_carro(); 
             break;
         case 2:
             //aprimoramentos(); Implementar
@@ -239,10 +310,10 @@ int menu(){
             //simula_corrida(); Implementar
             break;
         case 4:
-            //historico(); Implementar
+            historico();
             break;
         case 5:
-            //alteracoes_hist(); Implementar
+            alteracoes_hist(); 
             break;
         case 0:
             login();
